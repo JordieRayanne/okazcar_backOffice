@@ -1,0 +1,14 @@
+pour la fabrication de sac:
+
+un sac est caractérisé par les points suivans:
+  - sa taille
+  -les matières utilisé
+  -son type(cabas, sac à main,..)
+  -look(luxe,vintage,..)
+  -son prix
+
+la durée de travail dépend de la taille et du type et du look
+
+les matières possibles d'etre utilisées dépendent du look
+
+les quantités de matieres utilisées dépendent de la taille et du look et du type

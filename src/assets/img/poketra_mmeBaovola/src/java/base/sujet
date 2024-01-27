@@ -1,0 +1,22 @@
+pour la fabrication de sac:
+
+un sac est caractérisé par les points suivans:
+  - sa taille
+  -les matières utilisé
+  -son type(cabas, sac à main,..)
+  -look(luxe,vintage,..)
+  -son prix
+
+la durée de travail dépend de la taille et du type et du look
+
+les matières possibles d'etre utilisées dépendent du look
+
+les quantités de matieres utilisées dépendent de la taille et du look et du type
+
+
+Un ouvrier devient senior automatiquement apres 2 ans de travail
+Un senior devient expert automatiquement apres 3 ans de travail
+Le taux horaire d'un senior est 2 fois plus que Le taux horaire d'un ouvrier
+Le taux horaire d'un expert est 3 fois plus que Le taux horaire d'un senior
+
+Afficher la poste actuelle de tous les personnes avec son taux horaire
