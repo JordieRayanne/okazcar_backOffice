@@ -62,7 +62,7 @@
   "devDependencies": {
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9",
-     "@babel/plugin-proposal-private-property-in-object": "^1.0.0"
+    "@babel/plugin-proposal-private-property-in-object": "^7.0.0"
   },
   "optionalDependencies": {
     "eslint-plugin-flowtype": "8.0.3",
