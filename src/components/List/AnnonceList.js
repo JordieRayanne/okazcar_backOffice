@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
-import { RingLoader } from 'react-spinners'; // Import the spinner component
 import token from 'token';
 
 const AnnonceList = () => {
@@ -117,7 +116,7 @@ const AnnonceList = () => {
   };
 
   if (loading) {
-    return(<Col className="text-center"><RingLoader style={{margin:"0px auto 0 auto"}} color={'purple'} loading={loading} size={60} /></Col> );
+    return(<Col className="text-center">loading...</Col> );
   }
 
   if (error) {
