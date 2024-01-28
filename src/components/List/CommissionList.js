@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import {
     Badge,
     Card,
@@ -19,6 +20,26 @@ import {
     UncontrolledTooltip,
   } from "reactstrap";
 function CommissionList(){
+  const[commissions,setCommissions]=useState([]);
+
+  const listCommissions=()=>{
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjE4NDEsImV4cCI6MTcwNjQ2OTA0MX0.-Jn5DPKV6ZiAR4kEXsjyq5YCTqZR5WoQMhnuxul4ihs'; // Replace with your actual token
+    
+    axios.get('https://okazcar.up.railway.app/commissions', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .catch(error=>{
+        console.log("Error",error);
+      });
+  };
+
+  useEffect(()=>{
+    listCommissions();
+  },[]);
+
+
     return(
         <Card className="shadow">
               <CardHeader className="border-0">
@@ -33,13 +54,12 @@ function CommissionList(){
                   </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>2021 december 21</td>
-                    <td>11.6</td>
-                    
-                    
-                  </tr>
-                  
+                  {commissions.map((commission, index) => (
+                    <tr key={index}>
+                      <td>{commission.dateHeureCommission}</td>
+                      <td>{commission.commission}</td>
+                    </tr> 
+                  ))}
                 </tbody>
               </Table>
               <CardFooter className="py-4">
