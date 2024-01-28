@@ -22,7 +22,6 @@ import {
   Button
 } from 'reactstrap';
 import ModeleForm from 'components/Form/ModeleForm';
-import { RingLoader } from 'react-spinners'; // Import the spinner component
 import token from 'token';
 function ModeleList() {
   const [data, setData] = useState(null);
@@ -87,7 +86,7 @@ function ModeleList() {
   };
 
   if (loading) {
-    return (<Col className="text-center"><RingLoader style={{margin:"0px auto 0 auto"}} color={'purple'} loading={loading} size={60} /></Col> );
+    return (<Col className="text-center">loading...</Col> );
   }
 
   if (error) {
