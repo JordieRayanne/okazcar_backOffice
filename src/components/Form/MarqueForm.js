@@ -1,4 +1,5 @@
-import React from "react";
+import { useState } from "react";
+import axios from "axios";
 import {
     Button,
     Card,
@@ -13,7 +14,30 @@ import {
   } from "reactstrap";
   // core components
   import UserHeader from "components/Headers/UserHeader.js";
-function MarqueForm(){
+function MarqueForm({onInsertionSuccess}){
+  const[nom,setNom]=useState('');
+
+  const handleInsertion=()=>{
+    const formData={
+      nom:nom,
+    };
+    console.log(formData);
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjE4NDEsImV4cCI6MTcwNjQ2OTA0MX0.-Jn5DPKV6ZiAR4kEXsjyq5YCTqZR5WoQMhnuxul4ihs'; // Replace with your actual token
+
+    axios.post('https://okazcar.up.railway.app/marque', formData, {
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+      .then(response => {
+        console.log('Réponse de l\'insertion:', response.data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de l\'insertion:', error);
+        console.log('Réponse côté client:', error.response);
+      });
+  };
+  
     return(
         <>
       {/* Page content */}
@@ -39,12 +63,20 @@ function MarqueForm(){
                           </label>
                           <Input
                             className="form-control-alternative"
+                            value={nom}
+                            onChange={(e)=>setNom(e.target.value)}
                             defaultValue="lucky.jesse"
                             id="input-nom"
                             placeholder="nom"
                             type="text"
                           />
-                          <Button  style={{marginTop:"20px", color:"black",height:"35px"}} color="info">OK</Button>
+                          <Button
+                            style={{marginTop:"20px", color:"black",height:"35px"}} 
+                            color="info"
+                            onClick={handleInsertion}
+                          >
+                            OK
+                          </Button>
                         </FormGroup>
                       </Col>
                     </Row>
