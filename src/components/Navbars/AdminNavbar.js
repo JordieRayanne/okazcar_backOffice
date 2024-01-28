@@ -15,7 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 // reactstrap components
 import {
   DropdownMenu,
@@ -33,8 +33,15 @@ import {
   Container,
   Media,
 } from "reactstrap";
+import {useAuthUser} from "react-auth-kit";
 
 const AdminNavbar = (props) => {
+  const authUser = useAuthUser()
+  const navigate= useNavigate()
+  const signOut = () => {
+    localStorage.clear()
+    navigate("/auth/login")
+  }
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -64,12 +71,12 @@ const AdminNavbar = (props) => {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("../../assets/img/theme/team-4-800x800.jpg")}
+                      src={"data:image/jpeg;base64,"+authUser().image}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      {authUser().username}
                     </span>
                   </Media>
                 </Media>
@@ -78,7 +85,7 @@ const AdminNavbar = (props) => {
                 <DropdownItem className="noti-title" header tag="div">
                   <h6 className="text-overflow m-0">Welcome!</h6>
                 </DropdownItem>
-                <DropdownItem to="/admin/user-profile" tag={Link}>
+                {/*<DropdownItem to="/admin/user-profile" tag={Link}>
                   <i className="ni ni-single-02" />
                   <span>My profile</span>
                 </DropdownItem>
@@ -95,7 +102,8 @@ const AdminNavbar = (props) => {
                   <span>Support</span>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                */}
+                <DropdownItem href="#" onClick={signOut}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>
