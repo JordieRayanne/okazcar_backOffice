@@ -23,7 +23,7 @@ import {
 } from 'reactstrap';
 import ModeleForm from 'components/Form/ModeleForm';
 import { RingLoader } from 'react-spinners'; // Import the spinner component
-
+import token from 'token';
 function ModeleList() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,7 +35,12 @@ function ModeleList() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:8080/modeles');
+        const response = await fetch('https://okazcar.up.railway.app/modeles', {
+          method: 'GET',
+          headers:{
+            "Authorization":`Bearer ${token}`
+          }
+        });
         const result = await response.json();
         setData(result);
       } catch (error) {
@@ -59,8 +64,11 @@ function ModeleList() {
   };
 
   const handleConfirmDelete = () => { 
-    fetch(`http://localhost:8080/modeles/${DeleteId}`, {
-      method: 'DELETE'
+    fetch(`https://okazcar.up.railway.app/modeles/${DeleteId}`, {
+      method: 'DELETE',
+      headers:{
+        "Authorization":`Bearer ${token}`
+      }
     })
       .then(response => response.json())
       .then(data => {
