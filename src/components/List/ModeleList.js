@@ -15,12 +15,14 @@ import {
   Progress,
   Table,
   Container,
+  Col,
   Row,
   UncontrolledTooltip,
   Modal, ModalHeader, ModalBody, ModalFooter,
   Button
 } from 'reactstrap';
 import ModeleForm from 'components/Form/ModeleForm';
+import { RingLoader } from 'react-spinners'; // Import the spinner component
 
 function ModeleList() {
   const [data, setData] = useState(null);
@@ -77,7 +79,7 @@ function ModeleList() {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (<Col className="text-center"><RingLoader style={{margin:"0px auto 0 auto"}} color={'purple'} loading={loading} size={60} /></Col> );
   }
 
   if (error) {
@@ -86,6 +88,7 @@ function ModeleList() {
 
   return (
     <>
+      <div style={{marginTop:"3%"}}></div>
       <Card className="shadow">
         <CardHeader className="border-0">
           <h3 className="mb-0">Liste Modele</h3>
