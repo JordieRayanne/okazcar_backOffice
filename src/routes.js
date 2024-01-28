@@ -16,12 +16,6 @@
 
 */
 import Index from "views/Index.js";
-import Profile from "views/examples/Profile.js";
-import Maps from "views/examples/Maps.js";
-import Register from "views/examples/Register.js";
-import Login from "./views/examples/Login.jsx";
-import Tables from "views/examples/Tables.js";
-import Icons from "views/examples/Icons.js";
 import Categorie from "views/crud/Categorie.js";
 import Marque from "views/crud/Marque";
 import Modele from "views/crud/Modele";
@@ -30,7 +24,7 @@ import Devise from "views/crud/Devise";
 import Commission from "views/crud/Commission";
 import Annonce from "views/annnonce/Annonce";
 
-var routes = [
+let routes = [
   {
     path: "/index",
     name: "Statistiques",
