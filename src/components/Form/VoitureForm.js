@@ -1,24 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Input, Button } from 'reactstrap';
-const initialState = {
-  nom: '',
-  idcategorie: -1,
-  idtype: -1,
-  idmodele: -1,
-  couleur: '',
-  localisation: '',
-  description: '',
-  image1: '',
-  image2: '',
-  image3: ''
-};
+import {useAuthHeader} from "react-auth-kit";
 
 //gett all categorie
-function getAllCategorie() {
+function getAllCategorie(token) {
   return fetch('https://okazcar.up.railway.app/categories',{
     method: 'GET',
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjU2NzIsImV4cCI6MTcwNjQ3Mjg3Mn0.d3-HEA8_nYzLU2BRfCtvsIMYjBylXz1_IM594OcsPRI'
+      'Authorization': token
     },
   })
     .then(response => response.json())
@@ -29,11 +18,11 @@ function getAllCategorie() {
 }
 
 //get all type
-function getAllType() {
+function getAllType(token) {
   return fetch('https://okazcar.up.railway.app/types',{
     method: 'GET',
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjU2NzIsImV4cCI6MTcwNjQ3Mjg3Mn0.d3-HEA8_nYzLU2BRfCtvsIMYjBylXz1_IM594OcsPRI'
+      'Authorization': token
     },
   })
     .then(response => response.json())
@@ -44,11 +33,12 @@ function getAllType() {
 }
 
 //get all modele
-function getAllModele() {
+function getAllModele(token) {
+
   return fetch('https://okazcar.up.railway.app/modeles',{
     method: 'GET',
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjU2NzIsImV4cCI6MTcwNjQ3Mjg3Mn0.d3-HEA8_nYzLU2BRfCtvsIMYjBylXz1_IM594OcsPRI'
+      'Authorization': token
     },
   })
     .then(response => response.json())
@@ -58,28 +48,27 @@ function getAllModele() {
     });
 }
 
-function submitForm(data) {
-  const formData = new FormData();
+function submitForm(form, token) {
 
-  Object.keys(data).forEach(key => {
-    formData.append(key, data[key]);
-  });
+  const formData = new FormData(form);
 
-  return fetch('https://okazcar.up.railway.app/voiture', {
+  let url = "https://okazcar.up.railway.app/voiture"
+
+  return fetch(url, {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjU2NzIsImV4cCI6MTcwNjQ3Mjg3Mn0.d3-HEA8_nYzLU2BRfCtvsIMYjBylXz1_IM594OcsPRI'
+      'Authorization': token,
     },
-    body: formData,
+    body: formData
   })
   .then(response => {
-    alert(response.text());
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     return response.text(); 
   })
   .then(text => {
+    console.log(text)
     console.log('Response text:', text);
   })
   .catch(error => {
@@ -93,81 +82,68 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
   const [categories, setCategorie] = useState([]);
   const [types, setType] = useState([]);
   const [modeles, setModele] = useState([]);
-  const [formValues, setFormValues] = useState(initialState);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const token = useAuthHeader()
 
   //Categorie
   useEffect(() => {
-    const fetchCategorie = async () => {
+    const fetchCategorie = async (token) => {
       try {
-        const categorieData = await getAllCategorie();
+        const categorieData = await getAllCategorie(token);
         setCategorie(categorieData);
       } catch (error) {
-        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchCategorie();
+    fetchCategorie(token());
   }, []);
 
   // Type
   useEffect(() => {
-    const fetchType= async () => {
+    const fetchType= async (token) => {
       try {
-        const typeData = await getAllType();
+        const typeData = await getAllType(token);
         setType(typeData);
       } catch (error) {
-        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchType();
+    fetchType(token());
   }, []);
 
   //Modele
   useEffect(() => {
-    const fetchModele= async () => {
+    const fetchModele= async (token) => {
       try {
-        const typeData = await getAllModele();
+        const typeData = await getAllModele(token);
         setModele(typeData);
       } catch (error) {
-        console.error(error);
+        setError(error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchModele();
+    fetchModele(token());
   }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
 
   //insert voiture
-  const handleSubmit = async () => {
-    const formData = {
-      nom: formValues.nom,
-      categorie: formValues.idcategorie,
-      type: formValues.idtype,
-      modele: formValues.idmodele,
-      couleur: formValues.couleur,
-      localisation: formValues.localisation,
-      description: formValues.description,
-      prix: 0,
-      devise: 0,
-      image1: formValues.image1,
-      image2: formValues.image2,
-      image3:formValues.image3
-    };
-
+  const handleSubmit = async (event) => {
+    event.preventDefault()
     try {
-        await submitForm(formData);
+        await submitForm(event.target, token());
       console.log('Form submitted successfully!');
       window.location.reload();
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error submitting form:', error.toString());
     }
   };
 
@@ -179,7 +155,7 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
           <Col className="order-xl-1" xl="8">
             <Card className="bg-secondary shadow">
               <CardBody>
-                <Form>
+                <Form encType="multipart/form-data" onSubmit={handleSubmit}>
                   <h6 className="heading-small text-muted mb-4">
                     {title}
                   </h6>
@@ -194,10 +170,9 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             Nom
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             name="nom"
-                            value={formValues.nom}
-                            onChange={handleInputChange}
+                            required={true}
                             placeholder="nom"
                             type="text"
                           />
@@ -210,18 +185,15 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           </label>
                           <br />
                           <select
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             id="input-categorie"
-                            name="idcategorie"
-                            value={formValues.idcategorie}
-                            onChange={handleInputChange}
+                            name="categorie"
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
                              {categories.map((categorie) => (
                               <option
                                 key={categorie.id}
                                 value={categorie.id}
-                                selected={formValues.idcategorie !== -1 && formValues.idcategorie === categorie.id}
                               >
                                 {categorie.nom}
                               </option>
@@ -235,18 +207,15 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           </label>
                           <br />
                           <select
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             id="input-type"
-                            name="idtype"
-                            value={formValues.idtype}
-                            onChange={handleInputChange}
+                            name="type"
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
                               {types.map((type) => (
                               <option
                                 key={type.id}
                                 value={type.id}
-                                selected={formValues.idtype !== -1 && formValues.idtype === type.id}
                               >
                                 {type.nom}
                               </option>
@@ -260,18 +229,15 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           </label>
                           <br />
                           <select
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             id="input-modele"
-                            name="idmodele"
-                            value={formValues.idmodele}
-                            onChange={handleInputChange}
+                            name="modele"
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
                               {modeles.map((modele) => (
                               <option
                                 key={modele.id}
                                 value={modele.id}
-                                selected={formValues.idmodele !== -1 && formValues.idmodele === modele.id}
                               >
                                 {modele.nom}
                               </option>
@@ -285,9 +251,8 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           </label>
                           <br />
                           <select
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             id="input-couleur"
-                            value={formValues.couleur}
                             name="couleur"
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
@@ -303,10 +268,8 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             Localisation
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             name="localisation"
-                            value={formValues.localisation}
-                            onChange={handleInputChange}
                             placeholder="localisation"
                             type="text"
                           />
@@ -318,10 +281,8 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             Description
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             name="description"
-                            value={formValues.description}
-                            onChange={handleInputChange}
                             placeholder="description"
                             type="text"
                           />
@@ -333,11 +294,10 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             Image 1
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             name="image1"
-                            value={formValues.image1}
-                            onChange={handleInputChange}
                             placeholder="image1"
+                            required={true}
                             type="file"
                           />
                            <label
@@ -347,12 +307,11 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             Image 2
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             name="image2"
-                            value={formValues.image2}
-                            onChange={handleInputChange}
                             placeholder="image2"
                             type="file"
+                            required={true}
                           />
                            <label
                             className="form-control-label"
@@ -361,17 +320,15 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             Image 3
                           </label>
                           <Input
-                            className="form-control-alternative"
+                            className="form-control-alternative form-control"
                             name="image3"
-                            value={formValues.image3}
-                            onChange={handleInputChange}
+                            required={true}
                             placeholder="image3"
                             type="file"
                           />
                           <Button  
                             style={{marginTop:"20px", color:"black",height:"35px"}} 
                             color="info"
-                            onClick={handleSubmit}
                           >OK</Button>
                         </FormGroup>
                       </Col>
