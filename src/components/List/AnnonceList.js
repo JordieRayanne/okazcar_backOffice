@@ -172,8 +172,7 @@ const token = useAuthHeader()
                           </span>
                           <h5>Immatriculation: {annonce.voitureUtilisateur?.immatriculation || ''}</h5>
                           <h4>
-                            Prix de vente: {annonce.prix || ''} {annonce.devise?.nom || ''} - Prix du commission:{' '}
-                            {annonce.prixCommission || ''} {annonce.devise?.nom || ''}
+                            Prix de vente: {annonce.voitureUtilisateur.prix || ''} {annonce.voitureUtilisateur?.devise?.nom || ''}
                           </h4>
                           <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
                           <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
@@ -186,13 +185,13 @@ const token = useAuthHeader()
                           <>
                             <Button
                               style={{ margin: "20px 0px 0px 0px", backgroundColor: "lightgreen", color: "white" }}
-                              onClick={() => handleValidate(annonce.id)}
+                              onClick={() => handleValidate(annonce.voitureUtilisateur.id)}
                             >
                               Valider
                             </Button>
                             <Button 
                               style={{ margin: "20px 0px 0px 5%", backgroundColor: "lightsalmon", color: "white" }}
-                              onClick={() => handleReject(annonce.id)}
+                              onClick={() => handleReject(annonce.voitureUtilisateur.id)}
                             >
                               Refuser
                             </Button>
