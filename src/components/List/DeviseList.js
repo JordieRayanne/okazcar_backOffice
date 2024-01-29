@@ -16,7 +16,6 @@ import {
     Button,
   } from "reactstrap";
 function DeviseList(){
-  const[devises,setDevises]=useState([]);
   const[editingId, setEditingId]=useState(null);
   const[newNom,setNewNom]=useState(null);
 
