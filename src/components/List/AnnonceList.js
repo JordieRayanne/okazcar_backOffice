@@ -9,26 +9,30 @@ const AnnonceList = () => {
   const [isListValidated, setisListValidated] = useState(false);
   const token = useAuthHeader();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
-          headers: {
-            'Authorization': token()
-          },
-        });
+  const fetchData = async (url) => {
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Authorization': token()
+        },
+      });
 
-        const result = await response.json();
-        setisListValidated(true);
-        setData(result);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
+      const result = await response.json();
+      setData(result);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const fetchDataForValidated = async () => {
+      await fetchData('https://okazcar.up.railway.app/voitureUtilisateurs_validated');
+      setIsListValidated(true);
     };
 
-    fetchData();
+    fetchDataForValidated();
   }, [token]);
 
   const handleValidate = async (annonceId) => {
@@ -46,10 +50,10 @@ const AnnonceList = () => {
       }
 
       console.log('Validation successful!');
-      await handleAnnonceClick();
+      fetchDataForValidated();  // Fetch data for validated after successful validation
     } catch (error) {
       console.error('Error during validation:', error);
-      await handleAnnonceClick();
+      fetchDataForValidated();  // Fetch data for validated even if there's an error during validation
     }
   };
 
