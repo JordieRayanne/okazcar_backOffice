@@ -76,6 +76,7 @@ const Sidebar = (props) => {
       className="navbar-vertical fixed-left navbar-light bg-white"
       expand="md"
       id="sidenav-main"
+        style={{zIndex:1000}}
     >
       <Container fluid>
         {/* Toggler */}
