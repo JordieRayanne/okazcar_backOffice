@@ -23,12 +23,13 @@ import Index from "views/Index.js";
 // import Tables from "views/examples/Tables.js";
 import Icons from "views/examples/Icons.js";
 import Categorie from "views/crud/Categorie.js";
-import Marque from "views/crud/Marque";
-import Modele from "views/crud/Modele";
-import Type from "views/crud/Type";
-import Devise from "views/crud/Devise";
-import Commission from "views/crud/Commission";
-import Annonce from "views/annnonce/Annonce";
+import Marque from "views/crud/Marque.js";
+import Modele from "views/crud/Modele.js";
+import Type from "views/crud/Type.js";
+import Devise from "views/crud/Devise.js";
+import Commission from "views/crud/Commission.js";
+import Annonce from "views/annnonce/Annonce.js";
+import Voiture from "views/crud/Voiture.js";
 
 var routes = [
   {
@@ -85,6 +86,13 @@ var routes = [
     name: "Commission",
     icon: "ni ni-check-bold text-pink",
     component: <Commission />,
+    layout: "/admin",
+  },
+  {
+    path: "/voiture",
+    name: "Voiture",
+    icon: "ni ni-bus-front-12 text-brown",
+    component: <Voiture />,
     layout: "/admin",
   },
 ];
