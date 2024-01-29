@@ -38,6 +38,7 @@ import Marque from "views/crud/Marque";
 import Type from "views/crud/Type";
 import Devise from "views/crud/Devise";
 import Commission from "views/crud/Commission";
+import Voiture from "views/crud/Voiture";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -130,6 +131,16 @@ root.render(
                     routes={routes}
                     />
                     <Commission />
+                </>
+            } 
+            />
+            </Routes>
+                <Route path="/admin/voiture" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Voiture />
                 </>
             } 
             />
