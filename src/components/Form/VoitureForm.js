@@ -93,10 +93,7 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
   const [categories, setCategorie] = useState([]);
   const [types, setType] = useState([]);
   const [modeles, setModele] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [formValues, setFormValues] = useState(initialState);
-  const [formattedDate, setFormattedDate] = useState('');
 
   //Categorie
   useEffect(() => {
@@ -105,9 +102,7 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
         const categorieData = await getAllCategorie();
         setCategorie(categorieData);
       } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+        console.error(error);
       }
     };
 
@@ -121,9 +116,7 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
         const typeData = await getAllType();
         setType(typeData);
       } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+        console.error(error);
       }
     };
 
@@ -137,9 +130,7 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
         const typeData = await getAllModele();
         setModele(typeData);
       } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+        console.error(error);
       }
     };
 
