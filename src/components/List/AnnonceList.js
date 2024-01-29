@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardBody, Container, Row, Col, Button } from 'reactstrap';
+import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
 import { useAuthHeader } from 'react-auth-kit';
 
 const AnnonceList = () => {
@@ -118,7 +118,10 @@ const AnnonceList = () => {
               onClick={handleAnnonceAll}
               style={{ cursor: "pointer" }}
             >
-              Tout voir
+              <i className="ni ni-align-center" />
+              <UncontrolledTooltip placement="left" target="tooltip-icon-tout">
+                Tout voir
+              </UncontrolledTooltip>
             </div>
             <div
               className="icon icon-shape bg-danger text-white rounded-circle shadow"
@@ -126,12 +129,15 @@ const AnnonceList = () => {
               onClick={handleAnnonceClick}
               style={{ margin: "0px 0px 0px 10px", cursor: "pointer" }}
             >
-              Annonce en attente
+              <i className="ni ni-bell-55" />
+              <UncontrolledTooltip placement="left" target="tooltip-icon">
+                Annonce en attente
+              </UncontrolledTooltip>
             </div>
           </Row>
           {data.map((annonce) => (
             <Row key={annonce.id}>
-              <Col lg="6" xl="6" className="mb-4 mb-xl-0">
+              <Col lg="6" xl="6">
                 <Card style={{ height: '60vh' }} className="card-stats">
                   <CardBody>
                     <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
@@ -169,7 +175,7 @@ const AnnonceList = () => {
                   </CardBody>
                 </Card>
               </Col>
-              <Col lg="6" xl="6" className="mb-4 mb-xl-0">
+              <Col lg="6" xl="6">
                 {annonce.voitureImage[0] && (
                   <img
                     src={`data:image/jpeg;base64,${annonce.voitureImage[0]}`}
