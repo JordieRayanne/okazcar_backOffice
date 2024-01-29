@@ -32,7 +32,7 @@ root.render(
                   cookieSecure={window.location.protocol === "https:"}>
   <BrowserRouter>
         <Routes>
-            <Route exact path="/auth/*" element={<AuthLayout />}>
+            <Route exact path="/auth/*" element={<AuthLayout />}></Route>
                 <Route path="/admin/*"
                    element={
                        <RequireAuth loginPath="/auth/login">
