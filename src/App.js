@@ -8,12 +8,12 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-import Annonce from "views/annnonce/Annonce";
+import Annonce from "views/Index";
 function App(){
     return(
         <>
             <Routes>
-            <Route path="/test" element={<Annonce />} />
+            <Route path="/test" element={<Index />} />
             <Route path="/auth/*" element={<AuthLayout />} />
             <Route path="*" element={<Navigate to="/admin/index" replace />} />
             </Routes>
