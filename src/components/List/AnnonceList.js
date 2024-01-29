@@ -178,10 +178,17 @@ const AnnonceList = () => {
                           <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
                           <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
                         </Col>
-                        <img
-                          alt="(impossible de faire un rendu de l'image "
-                          src={`data:image/png;base64,${annonce.voitureImage[0]}`}
-                      />
+                        <div
+                          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
+                          style={{
+                            minHeight: '300px',
+                            width: '100%',
+                            backgroundImage:
+                              'url(' + require('../../assets/img/theme/profile-cover.jpg') + ')',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center top',
+                          }}
+                        ></div>
                        {!isListValidated ? (
                           <>
                             <Button
@@ -212,5 +219,3 @@ const AnnonceList = () => {
 };
 
 export default AnnonceList;
-
-
