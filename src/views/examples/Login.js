@@ -53,7 +53,7 @@ const Login = () => {
           tokenType: "Bearer",
           authState: { email: event.target.querySelector("[type=email]").value, username: response.Data.Username, image: response.Data.Image }
         });
-        navigate("/admin")
+        navigate("/admin/statistiques");
       } else {
         setDisable(false)
         setError(response.Error)
