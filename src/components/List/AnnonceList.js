@@ -162,31 +162,33 @@ const AnnonceList = () => {
                         <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
                         <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
                       </Col>
-                      <Col>
+                      <Col lg="6" md="6" sm="12">
                         {/* Display the image here */}
                         {annonce.voitureImage[0] && (
                           <img
                             src={`data:image/jpeg;base64,${annonce.voitureImage[0]}`}
                             alt="Voiture"
-                            style={{ width: '100%', maxHeight: '200px', objectFit: 'cover' }}
+                            style={{ width: '100%', height: 'auto', maxHeight: '200px', objectFit: 'cover' }}
                           />
                         )}
                       </Col>
                       {!isListValidated ? (
-                        <>
-                          <Button
-                            style={{ margin: "20px 0px 0px 0px", backgroundColor: "lightgreen", color: "white" }}
-                            onClick={() => handleValidate(annonce.id)}
-                          >
-                            Valider
-                          </Button>
-                          <Button
-                            style={{ margin: "20px 0px 0px 5%", backgroundColor: "lightsalmon", color: "white" }}
-                            onClick={() => handleReject(annonce.id)}
-                          >
-                            Refuser
-                          </Button>
-                        </>
+                        <Col lg="12" md="12" sm="12" className="mt-3">
+                          <>
+                            <Button
+                              style={{ width: '100%', backgroundColor: "lightgreen", color: "white" }}
+                              onClick={() => handleValidate(annonce.id)}
+                            >
+                              Valider
+                            </Button>
+                            <Button
+                              style={{ width: '100%', backgroundColor: "lightsalmon", color: "white", marginTop: '5px' }}
+                              onClick={() => handleReject(annonce.id)}
+                            >
+                              Refuser
+                            </Button>
+                          </>
+                        </Col>
                       ) : ""}
                     </Row>
                   </CardBody>
