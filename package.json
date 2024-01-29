@@ -1,22 +1,14 @@
 {
-  "name": "okazcar_backOffice",
+  "name": "okazcar",
   "version": "1.2.4",
-  "description": "Okazcar back office interface ",
+  "description": "Projet vente de voiture en ligne",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-react.git"
-  },
   "keywords": [
     "react",
-    "reactjs",
-    "argon",
-    "argon-react",
-    "dashboard",
-    "dashboard-react",
-    "argon-dashboard",
-    "argon-dashboard-react"
+    "reactjs"
   ],
+  "author": "Creative Tim",
+  "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
@@ -38,12 +30,14 @@
   ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "6.5.1",
+    "axios": "^1.6.7",
     "bootstrap": "4.6.2",
     "chart.js": "2.9.4",
     "classnames": "2.3.2",
     "moment": "2.29.4",
     "nouislider": "15.4.0",
     "react": "18.2.0",
+    "react-auth-kit": "^2.12.7",
     "react-chartjs-2": "2.11.2",
     "react-copy-to-clipboard": "5.1.0",
     "react-datetime": "3.2.0",
@@ -51,11 +45,11 @@
     "react-router-dom": "6.21.1",
     "react-scripts": "5.0.1",
     "react-spinners": "^0.13.8",
-    "reactstrap": "8.10.0",
-    "sass": "1.69.5",
-    "axios":"^1.6.7"
+    "reactstrap": "^8.10.0",
+    "sass": "1.69.5"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.0.0",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.9"
   },
