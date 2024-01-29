@@ -8,7 +8,7 @@ import "assets/scss/argon-dashboard-react.scss";
 
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-import Index from "views/Index";
+import Index from "views/Index.js";
 function App(){
     return(
         <>
