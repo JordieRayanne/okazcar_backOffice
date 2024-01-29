@@ -1,23 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-    Badge,
     Card,
     CardHeader,
     CardFooter,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown,
-    DropdownToggle,
-    Media,
     Pagination,
     PaginationItem,
     PaginationLink,
-    Progress,
     Table,
-    Container,
-    Row,
-    UncontrolledTooltip,
   } from "reactstrap";
 function CommissionList(){
   const[commissions,setCommissions]=useState([]);

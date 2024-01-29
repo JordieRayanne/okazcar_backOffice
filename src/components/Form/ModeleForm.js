@@ -2,17 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Input, Button } from 'reactstrap';
 
 function getAllMarques() {
-  // Implement the logic to fetch marques data
   return fetch('http://localhost:8080/marques')
     .then(response => response.json())
     .catch(error => {
       console.error('Error fetching marques:', error);
-      throw error; // Rethrow the error to be caught in the component
+      throw error;
     });
 }
 
 function submitForm(data) {
-  // Implement the logic to send data to the server
   return fetch('http://localhost:8080/modeles', {
     method: 'POST',
     headers: {
@@ -39,7 +37,6 @@ function updateForm(data) {
   })
     .then(response => {
       if (!response.ok) {
-        // Handle non-successful responses (e.g., display an error message)
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       return response.json();
@@ -62,7 +59,6 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
   });
 
   useEffect(() => {
-    // Format the date when it changes
     setFormattedDate(dateCreation.split('T')[0]);
   }, [dateCreation]);
 
@@ -112,7 +108,6 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
 
   return (
     <>
-      {/* Page content */}
       <div style={{ marginTop: "10%" }}></div>
       <Container className="mt--7" fluid style={{ marginTop: "2%" }}>
         <Row>

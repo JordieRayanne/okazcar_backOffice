@@ -12,8 +12,6 @@ import {
     Row,
     Col,
   } from "reactstrap";
-  // core components
-  import UserHeader from "components/Headers/UserHeader.js";
 function TypeForm(){
   const[nom,setNom]=useState('');
 
@@ -39,7 +37,6 @@ function TypeForm(){
   };
     return(
         <>
-      {/* Page content */}
       <div style={{marginTop:"10%"}}></div>
       <Container className="mt--7" fluid style={{marginTop:"2%"}}>
         <Row>

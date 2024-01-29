@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Input, Button } from 'reactstrap';
-import UserHeader from "components/Headers/UserHeader.js";
 const initialState = {
   nom: '',
   idcategorie: -1,
@@ -81,7 +80,7 @@ function submitForm(data) {
     return response.text(); 
   })
   .then(text => {
-    console.log('Response text:', text); // Log the response text for debugging
+    console.log('Response text:', text);
   })
   .catch(error => {
     console.error('Error submitting form:', error);

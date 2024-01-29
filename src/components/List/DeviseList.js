@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
-    Badge,
     Card,
     CardHeader,
     CardFooter,
@@ -9,15 +8,10 @@ import {
     DropdownItem,
     UncontrolledDropdown,
     DropdownToggle,
-    Media,
     Pagination,
     PaginationItem,
     PaginationLink,
-    Progress,
     Table,
-    Container,
-    Row,
-    UncontrolledTooltip,
     Input,
     Button,
   } from "reactstrap";

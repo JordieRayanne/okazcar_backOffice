@@ -3,7 +3,6 @@ import axios from "axios";
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
     FormGroup,
     Form,
@@ -12,8 +11,6 @@ import {
     Row,
     Col,
   } from "reactstrap";
-  // core components
-  import UserHeader from "components/Headers/UserHeader.js";
 function DeviseForm(){
   const[nom,setNom]=useState('');
 
@@ -40,7 +37,6 @@ function DeviseForm(){
 
     return(
         <>
-      {/* Page content */}
       <div style={{marginTop:"10%"}}></div>
       <Container className="mt--7" fluid style={{marginTop:"2%"}}>
         <Row>
