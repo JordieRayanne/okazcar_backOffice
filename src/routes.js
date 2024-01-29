@@ -1,5 +1,27 @@
+/*!
+
+=========================================================
+* Argon Dashboard React - v1.2.4
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
+* Copyright 2024 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
 import Index from "views/Index.js";
-import Voiture from "views/crud/Voiture.js";
+// import Profile from "views/examples/Profile.js";
+// import Maps from "views/examples/Maps.js";
+// import Register from "views/examples/Register.js";
+// import Login from "views/examples/Login.js";
+// import Tables from "views/examples/Tables.js";
+import Icons from "views/examples/Icons.js";
 import Categorie from "views/crud/Categorie.js";
 import Marque from "views/crud/Marque";
 import Modele from "views/crud/Modele";
@@ -10,10 +32,10 @@ import Annonce from "views/annnonce/Annonce";
 
 var routes = [
   {
-    path: "/index",
+    path: "/statistiques",
     name: "Statistiques",
     icon: "ni ni-chart-bar-32 text-primary",
-    component: <Index />,
+    component: <Icons />,
     layout: "/admin",
   },
   {
@@ -21,13 +43,6 @@ var routes = [
     name: "Annonce",
     icon: "ni ni-single-copy-04 text-green",
     component: <Annonce />,
-    layout: "/admin",
-  },
-  {
-    path: "/voitures",
-    name: "Voiture",
-    icon: "ni ni-bus-front-12 text-brown",
-    component: <Voiture />,
     layout: "/admin",
   },
   {
