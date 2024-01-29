@@ -61,7 +61,6 @@ root.render(
                   path="/"
                   element={<Navigate to="/auth/login" replace />}
                 />
-                  <Routes>
             <Route path="/admin/statistiques" element={
                 <>
                     <Sidebar 
