@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
 import { useAuthHeader } from 'react-auth-kit';
-
+import { Image } from 'react-native';
 const AnnonceList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,30 +9,26 @@ const AnnonceList = () => {
   const [isListValidated, setisListValidated] = useState(false);
   const token = useAuthHeader();
 
-  const fetchData = async (url) => {
-    try {
-      const response = await fetch(url, {
-        headers: {
-          'Authorization': token()
-        },
-      });
-
-      const result = await response.json();
-      setData(result);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    const fetchDataForValidated = async () => {
-      await fetchData('https://okazcar.up.railway.app/voitureUtilisateurs_validated');
-      setIsListValidated(true);
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
+          headers: {
+            'Authorization': token()
+          },
+        });
+
+        const result = await response.json();
+        setisListValidated(true);
+        setData(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    fetchDataForValidated();
+    fetchData();
   }, [token]);
 
   const handleValidate = async (annonceId) => {
@@ -50,10 +46,10 @@ const AnnonceList = () => {
       }
 
       console.log('Validation successful!');
-      fetchDataForValidated();  // Fetch data for validated after successful validation
+      await handleAnnonceClick();
     } catch (error) {
       console.error('Error during validation:', error);
-      fetchDataForValidated();  // Fetch data for validated even if there's an error during validation
+      await handleAnnonceClick();
     }
   };
 
@@ -141,52 +137,54 @@ const AnnonceList = () => {
           </Row>
           {data.map((annonce) => (
             <Row key={annonce.id}>
-              <Col lg="6" xl="6">
-                <Card style={{ height: '60vh' }} className="card-stats">
+              <Col lg="2" xl="4">
+                <Card style={{ height: '60vh' }} className="card-stats mb-4 mb-xl-0">
                   <CardBody>
-                    <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
-                    <span className="h2 font-weight-bold mb-0">
-                      {annonce.voitureUtilisateur?.voiture?.nom || annonce.voiture.nom} -{' '}
-                      {annonce.voitureUtilisateur?.voiture?.modele?.marque?.nom ||
-                        annonce.voiture.modele.marque.nom}{' '}
-                      {annonce.voitureUtilisateur?.voiture?.categorie?.nom ||
-                        annonce.voiture.categorie.nom} <br />
-                      Type: {annonce.voitureUtilisateur?.voiture?.type?.nom || annonce.voiture.type.nom}
-                    </span>
-                    <h5>Immatriculation: {annonce.voitureUtilisateur?.immatriculation || ''}</h5>
-                    <h4>
-                      Prix de vente: {annonce.prix || ''} {annonce.devise?.nom || ''} - Prix du commission:{' '}
-                      {annonce.prixCommission || ''} {annonce.devise?.nom || ''}
-                    </h4>
-                    <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
-                    <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
-                    {!isListValidated ? (
-                      <>
-                        <Button
-                          style={{ width: '100%', backgroundColor: "lightgreen", color: "white" }}
-                          onClick={() => handleValidate(annonce.id)}
-                        >
-                          Valider
-                        </Button>
-                        <Button
-                          style={{ width: '100%', backgroundColor: "lightsalmon", color: "white", marginTop: '5px' }}
-                          onClick={() => handleReject(annonce.id)}
-                        >
-                          Refuser
-                        </Button>
-                      </>
-                    ) : ""}
+                    <Row>
+                      <Col>
+                        <CardTitle tag="h5" className="text-uppercase text-muted mb-0">
+                          {annonce.voitureUtilisateur?.utilisateur.username}
+                        </CardTitle>
+                        <span className="h2 font-weight-bold mb-0">
+                          {annonce.voitureUtilisateur?.voiture?.nom || annonce.voiture.nom} -{' '}
+                          {annonce.voitureUtilisateur?.voiture?.modele?.marque?.nom ||
+                            annonce.voiture.modele.marque.nom}{' '}
+                          {annonce.voitureUtilisateur?.voiture?.categorie?.nom ||
+                            annonce.voiture.categorie.nom} <br />
+                          Type: {annonce.voitureUtilisateur?.voiture?.type?.nom || annonce.voiture.type.nom}
+                        </span>
+                        <h5>Immatriculation: {annonce.voitureUtilisateur?.immatriculation || ''}</h5>
+                        <h4>
+                          Prix de vente: {annonce.prix || ''} {annonce.devise?.nom || ''} - Prix du commission:{' '}
+                          {annonce.prixCommission || ''} {annonce.devise?.nom || ''}
+                        </h4>
+
+                        <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
+                        <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
+                      </Col>
+                      <Image
+                        style={{ width: 100, height: 100 }} // Set the appropriate width and height
+                        source={{ uri: `data:image/png;base64,${annonce.voitureImage[0]}` }} // Use the base64 image data
+                      />
+                      {!isListValidated ? (
+                        <>
+                          <Button
+                            style={{ margin: "20px 0px 0px 0px", backgroundColor: "lightgreen", color: "white" }}
+                            onClick={() => handleValidate(annonce.id)}
+                          >
+                            Valider
+                          </Button>
+                          <Button
+                            style={{ margin: "20px 0px 0px 5%", backgroundColor: "lightsalmon", color: "white" }}
+                            onClick={() => handleReject(annonce.id)}
+                          >
+                            Refuser
+                          </Button>
+                        </>
+                      ) : ""}
+                    </Row>
                   </CardBody>
                 </Card>
-              </Col>
-              <Col lg="6" xl="6">
-                {annonce.voitureImage[0] && (
-                  <img
-                    src={`data:image/jpeg;base64,${annonce.voitureImage[0]}`}
-                    alt="Voiture"
-                    style={{ width: '100%', height: 'auto', maxHeight: '60vh', objectFit: 'contain' }}
-                  />
-                )}
               </Col>
             </Row>
           ))}
