@@ -40,7 +40,9 @@ function CategorieList(){
   };
 
   const handleUpdate = () => {
-    axios.put(`https://okazcar.up.railway.app/categories/${editingId}`, { nom: newNom }, {
+      const formData = new FormData()
+      formData.append("nom", newNom)
+    axios.put(`https://okazcar.up.railway.app/categories/${editingId}`, formData, {
       headers: {
         Authorization: token()
       }

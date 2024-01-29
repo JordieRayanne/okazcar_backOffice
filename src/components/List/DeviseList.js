@@ -40,7 +40,9 @@ function DeviseList(){
   };
 
   const handleUpdate = () => {
-    axios.put(`https://okazcar.up.railway.app/devises/${editingId}`, { nom: newNom }, {
+      const formData = new FormData()
+      formData.append("nom", newNom)
+    axios.put(`https://okazcar.up.railway.app/devises/${editingId}`, formData, {
       headers: {
         Authorization: token()
       }

@@ -39,7 +39,10 @@ function TypeList(){
   };
 
   const handleUpdate = () => {
-    axios.put(`https://okazcar.up.railway.app/types/${editingId}`, { nom: newNom }, {
+    const formData = new FormData()
+    formData.append("nom", newNom)
+
+    axios.put(`https://okazcar.up.railway.app/types/${editingId}`, formData, {
       headers: {
         Authorization: token()
       }

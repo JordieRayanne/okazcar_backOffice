@@ -86,7 +86,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
   const [error, setError] = useState(null);
   const token = useAuthHeader()
 
-  const [formValues, setFormValues] = useState(initialState);
   //Categorie
   useEffect(() => {
     const fetchCategorie = async (token) => {
@@ -135,13 +134,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
     fetchModele(token());
   }, []);
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
 
   //insert voiture
   const handleSubmit = async (event) => {
@@ -151,7 +143,7 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
       console.log('Form submitted successfully!');
       window.location.reload();
     } catch (error) {
-      console.error('Error submitting form:', error);
+      console.error('Error submitting form:', error.toString());
     }
   };
 
@@ -180,8 +172,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <Input
                             className="form-control-alternative form-control"
                             name="nom"
-                            value={formValues.nom}
-                            onChange={handleInputChange}
                             required={true}
                             placeholder="nom"
                             type="text"
@@ -198,15 +188,12 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             className="form-control-alternative form-control"
                             id="input-categorie"
                             name="categorie"
-                            value={formValues.idcategorie}
-                            onChange={handleInputChange}
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
                              {categories.map((categorie) => (
                               <option
                                 key={categorie.id}
                                 value={categorie.id}
-                                selected={formValues.idcategorie !== -1 && formValues.idcategorie === categorie.id}
                               >
                                 {categorie.nom}
                               </option>
@@ -223,15 +210,12 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             className="form-control-alternative form-control"
                             id="input-type"
                             name="type"
-                            value={formValues.idtype}
-                            onChange={handleInputChange}
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
                               {types.map((type) => (
                               <option
                                 key={type.id}
                                 value={type.id}
-                                selected={formValues.idtype !== -1 && formValues.idtype === type.id}
                               >
                                 {type.nom}
                               </option>
@@ -248,15 +232,12 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                             className="form-control-alternative form-control"
                             id="input-modele"
                             name="modele"
-                            value={formValues.idmodele}
-                            onChange={handleInputChange}
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
                               {modeles.map((modele) => (
                               <option
                                 key={modele.id}
                                 value={modele.id}
-                                selected={formValues.idmodele !== -1 && formValues.idmodele === modele.id}
                               >
                                 {modele.nom}
                               </option>
@@ -272,7 +253,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <select
                             className="form-control-alternative form-control"
                             id="input-couleur"
-                            value={formValues.couleur}
                             name="couleur"
                             style={{ width: "100%", height: "43px", borderRadius: "5pt" }}
                           >
@@ -290,8 +270,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <Input
                             className="form-control-alternative form-control"
                             name="localisation"
-                            value={formValues.localisation}
-                            onChange={handleInputChange}
                             placeholder="localisation"
                             type="text"
                           />
@@ -305,8 +283,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <Input
                             className="form-control-alternative form-control"
                             name="description"
-                            value={formValues.description}
-                            onChange={handleInputChange}
                             placeholder="description"
                             type="text"
                           />
@@ -320,8 +296,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <Input
                             className="form-control-alternative form-control"
                             name="image1"
-                            value={formValues.image1}
-                            onChange={handleInputChange}
                             placeholder="image1"
                             required={true}
                             type="file"
@@ -335,8 +309,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <Input
                             className="form-control-alternative form-control"
                             name="image2"
-                            value={formValues.image2}
-                            onChange={handleInputChange}
                             placeholder="image2"
                             type="file"
                             required={true}
@@ -350,8 +322,6 @@ function VoitureForm({ title = 'Voiture', isUpdate = false }) {
                           <Input
                             className="form-control-alternative form-control"
                             name="image3"
-                            value={formValues.image3}
-                            onChange={handleInputChange}
                             required={true}
                             placeholder="image3"
                             type="file"

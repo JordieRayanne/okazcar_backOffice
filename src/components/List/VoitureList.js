@@ -13,7 +13,8 @@ import {
 } from 'reactstrap';
 import VoitureForm from 'components/Form/VoitureForm';
 import { RingLoader } from 'react-spinners';
-import {useAuthHeader} from "react-auth-kit"; // Import the spinner component
+import {useAuthHeader} from "react-auth-kit";
+import axios from "axios"; // Import the spinner component
 
 function VoitureList() {
   const [data, setData] = useState(null);
@@ -54,29 +55,29 @@ function VoitureList() {
     setDeleteId(item.voiture.id);
   };
 
-  const handleConfirmDelete = () => { 
+  const handleConfirmDelete = () => {
     fetch(`https://okazcar.up.railway.app/voitures/${DeleteId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': token()
       }
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        console.log('Item deleted successfully');
-        return response.json();
-      })
-      .then(data => {
-      })
-      .catch(error => {
-        console.error('Error deleting item:', error);
-      });
-  
-    window.location.reload();
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          console.log('Item deleted successfully');
+          return response.json();
+        })
+        .then(data => {
+          window.location.reload();
+        })
+        .catch(error => {
+          console.error('Error deleting item:', error);
+        });
   };
-  
+
+
 
   const handleCancelDelete = () => {
     setConfirmDeleteModal(false);
