@@ -49,8 +49,6 @@ function updateForm(data) {
 
 function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCreation = "", isUpdate = false }) {
   const [marques, setMarques] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [formattedDate, setFormattedDate] = useState('');
   const [formValues, setFormValues] = useState({
     nom: nom,
@@ -68,9 +66,7 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
         const marquesData = await getAllMarques();
         setMarques(marquesData);
       } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+        console.error(error);
       }
     };
 
