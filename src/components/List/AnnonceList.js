@@ -11,12 +11,13 @@ const AnnonceList = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        
         const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
           headers: {
-            'Authorization': token()
+            Authorization: `Bearer ${token}`
           },
         });
-
+  
         const result = await response.json();
         setisListValidated(true);
         setData(result);
@@ -26,9 +27,9 @@ const AnnonceList = () => {
         setLoading(false);
       }
     };
-
+  
     fetchData();
-  }, [token]);
+  }, []);
 
   const handleValidate = async (annonceId) => {
     try {
