@@ -15,7 +15,6 @@ import {
 } from 'reactstrap';
 import VoitureForm from 'components/Form/VoitureForm';
 import { RingLoader } from 'react-spinners'; // Import the spinner component
-import Header from 'components/Headers/Header';
 
 function VoitureList() {
   const [data, setData] = useState(null);
