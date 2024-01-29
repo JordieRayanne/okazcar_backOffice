@@ -30,10 +30,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <BrowserRouter>
+    <React.StrictMode>
     <Routes>
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="*" element={<Navigate to="/admin/index" replace />} />
     </Routes>
+  </React.StrictMode>
   </BrowserRouter>
 );
