@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
-import token from 'token';
+import {useAuthHeader} from "react-auth-kit";
 
 const AnnonceList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isListValidated, setisListValidated] = useState(false);
-
+  const token = useAuthHeader()
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
           headers: {
-            Authorization: `Bearer ${token}`
+            'Authorization': token()
           },
         });
   
@@ -37,7 +36,7 @@ const AnnonceList = () => {
         method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          'Authorization': token(),
         },
       });
   
@@ -46,28 +45,16 @@ const AnnonceList = () => {
       }
   
       console.log('Validation successful!');
-      handleAnnonceClick();
+      await handleAnnonceClick();
     } catch (error) {
       console.error('Error during validation:', error);
-      handleAnnonceClick();
+      await handleAnnonceClick();
 
     }
   };
 
   const handleReject = async (annonceId) => {
     try {
-      // const response = await fetch(`http://localhost:8080/voitureUtilisateurs/${annonceId}/to-10`, {
-      //   method: 'POST', 
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
-  
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
-  
       alert('Rejected');
     } catch (error) {
       console.error('Error during validation:', error);
@@ -78,11 +65,9 @@ const AnnonceList = () => {
     try {
       setLoading(true);
       await new Promise(resolve => setTimeout(resolve, 1000));
-
-  
       const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_not_validated', {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': token()
         },
       });
       const result = await response.json();
@@ -98,11 +83,9 @@ const AnnonceList = () => {
     try {
       setLoading(true);
       await new Promise(resolve => setTimeout(resolve, 1000));
-
-  
       const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': token()
         },
       });
       const result = await response.json();
@@ -127,7 +110,7 @@ const AnnonceList = () => {
     <div className="header bg-gradient-purple pb-8 pt-5 pt-md-8">
       <Container fluid>
         <div className="header-body">
-          <Row style={{ margin: '-7% 0px 3% 90%' }}>
+          <Row style={{ margin: '0 0px 3% 90%' }}>
           <div
               className="icon icon-shape bg-success text-white rounded-circle shadow"
               id="tooltip-icon-tout"
@@ -151,7 +134,7 @@ const AnnonceList = () => {
               </UncontrolledTooltip>
             </div>
           </Row>
-          {data.map((annonce) => (
+          { data.map((annonce) => (
               <Row key={annonce.id}>
                 <Col lg="2" xl="4">
                   <Card style={{ height: '60vh' }} className="card-stats mb-4 mb-xl-0">
@@ -196,7 +179,7 @@ const AnnonceList = () => {
                             >
                               Valider
                             </Button>
-                            <Button 
+                            <Button
                               style={{ margin: "20px 0px 0px 5%", backgroundColor: "lightsalmon", color: "white" }}
                               onClick={() => handleReject(annonce.id)}
                             >
@@ -218,5 +201,4 @@ const AnnonceList = () => {
 };
 
 export default AnnonceList;
-
 
