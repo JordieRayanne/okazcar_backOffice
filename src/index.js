@@ -19,7 +19,7 @@ import Commission from "views/crud/Commission";
 import Login from "views/examples/Login";
 
 // Placeholder components (replace with your actual components)
-const Login = () => <div><Login /></div>;
+const login = () => <div><Login /></div>;
 const NotFound = () => <div>404 Not Found</div>;
 
 // AuthenticatedRoute component to protect routes
