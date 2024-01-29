@@ -39,6 +39,7 @@ import Type from "views/crud/Type";
 import Devise from "views/crud/Devise";
 import Commission from "views/crud/Commission";
 import Voiture from "views/crud/Voiture";
+import AdminNavbar from "components/Navbars/AdminNavbar";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -67,6 +68,7 @@ root.render(
                     <Sidebar 
                     routes={routes}
                     />
+                    <AdminNavbar style={{zIndex:1000}}/>
                     <Index />
                 </>
             } 
