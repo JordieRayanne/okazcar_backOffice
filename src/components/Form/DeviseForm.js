@@ -1,8 +1,7 @@
-import React from "react";
+import { useState } from "react";
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
     FormGroup,
     Form,
@@ -11,12 +10,40 @@ import {
     Row,
     Col,
   } from "reactstrap";
-  // core components
-  import UserHeader from "components/Headers/UserHeader.js";
 function DeviseForm(){
+  const[nom,setNom]=useState('');
+
+  const handleInsertion = () => {
+    const formData = {
+      nom: nom,
+    };
+    console.log(formData);
+    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjE4NDEsImV4cCI6MTcwNjQ2OTA0MX0.-Jn5DPKV6ZiAR4kEXsjyq5YCTqZR5WoQMhnuxul4ihs'; // Replace with your actual token
+
+    fetch('https://okazcar.up.railway.app/devise', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Réponse de l\'insertion:', data);
+      })
+      .catch(error => {
+        console.error('Erreur lors de l\'insertion:', error);
+      });
+  };
+
     return(
         <>
-      {/* Page content */}
       <div style={{marginTop:"10%"}}></div>
       <Container className="mt--7" fluid style={{marginTop:"2%"}}>
         <Row>
@@ -39,12 +66,18 @@ function DeviseForm(){
                           </label>
                           <Input
                             className="form-control-alternative"
+                            value={nom}
+                            onChange={(e)=>setNom(e.target.value)}
                             defaultValue="lucky.jesse"
                             id="input-nom"
                             placeholder="nom"
                             type="text"
                           />
-                          <Button  style={{marginTop:"20px", color:"black",height:"35px"}} color="info">OK</Button>
+                          <Button  
+                          style={{marginTop:"20px", color:"black",height:"35px"}} 
+                          color="info"
+                          onClick={handleInsertion}
+                          >OK</Button>
                         </FormGroup>
                       </Col>
                     </Row>

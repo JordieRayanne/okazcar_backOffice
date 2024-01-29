@@ -13,23 +13,25 @@ import {
   Modal, ModalHeader, ModalBody, ModalFooter,
   Button
 } from 'reactstrap';
-import ModeleForm from 'components/Form/ModeleForm';
-import token from 'token';
-function ModeleList() {
+import VoitureForm from 'components/Form/VoitureForm';
+import { RingLoader } from 'react-spinners'; // Import the spinner component
+import Header from 'components/Headers/Header';
+
+function VoitureList() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedModele, setSelectedModele] = useState(null);
+  const [selectedVoiture, setSelectedVoiture] = useState(null);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [DeleteId, setDeleteId] = useState(-1);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://okazcar.up.railway.app/modeles', {
-          method: 'GET',
+        const response = await fetch('https://okazcar.up.railway.app/voitures',{
+          method:'GET',
           headers:{
-            "Authorization":`Bearer ${token}`
+            'Authorization':'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NzA1MTksImV4cCI6MTcwNjQ3NzcxOX0.YwDbrYcECBJZRfRjOz4FKxSotTfLtKAGDWNSJDnDGU0'
           }
         });
         const result = await response.json();
@@ -44,41 +46,46 @@ function ModeleList() {
     fetchData();
   }, []);
 
-  const handleModifierClick = (modele) => {
-    setSelectedModele({ ...modele });
+  const handleModifierClick = (Voiture) => {
+    setSelectedVoiture({ ...Voiture });
   };
 
   const handleSupprimerClick = (item) => {
     setConfirmDeleteModal(true);
-    console.log(item.id+" huhu");
-    setDeleteId(item.id);
+    console.log(item.voiture.id+" huhu");
+    setDeleteId(item.voiture.id);
   };
 
   const handleConfirmDelete = () => { 
-    fetch(`https://okazcar.up.railway.app/modeles/${DeleteId}`, {
+    fetch(`https://okazcar.up.railway.app/voitures/${DeleteId}`, {
       method: 'DELETE',
-      headers:{
-        "Authorization":`Bearer ${token}`
+      headers: {
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NzA1MTksImV4cCI6MTcwNjQ3NzcxOX0.YwDbrYcECBJZRfRjOz4FKxSotTfLtKAGDWNSJDnDGU0'
       }
     })
-      .then(response => response.json())
-      .then(data => {
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
         console.log('Item deleted successfully');
+        return response.json();
+      })
+      .then(data => {
       })
       .catch(error => {
         console.error('Error deleting item:', error);
       });
-
-    // For now, just close the modal
+  
     window.location.reload();
   };
+  
 
   const handleCancelDelete = () => {
     setConfirmDeleteModal(false);
   };
 
   if (loading) {
-    return (<Col className="text-center">loading...</Col> );
+    return (<Col className="text-center"><RingLoader style={{margin:"0px auto 0 auto"}} color={'purple'} loading={loading} size={60} /></Col> );
   }
 
   if (error) {
@@ -90,14 +97,18 @@ function ModeleList() {
       <div style={{marginTop:"3%"}}></div>
       <Card className="shadow">
         <CardHeader className="border-0">
-          <h3 className="mb-0">Liste Modele</h3>
+          <h3 className="mb-0">Liste Voiture</h3>
         </CardHeader>
         <Table className="align-items-center table-flush" responsive>
           <thead className="thead-light">
             <tr>
               <th scope="col">Nom</th>
-              <th scope="col">Marque</th>
-              <th scope="col">Date creation</th>
+              <th scope="col">Categorie</th>
+              <th scope="col">Type</th>
+              <th scope="col">Modele</th>
+              <th scope="col">Couleur</th>
+              <th scope="col">Localisation</th>
+              <th scope="col">Description</th>
               <th scope="col" />
             </tr>
           </thead>
@@ -105,9 +116,13 @@ function ModeleList() {
             {data &&
               data.map((item) => (
                 <tr key={item.id}>
-                  <td>{item.nom}</td>
-                  <td>Marque 1</td>
-                  <td>{item.dateCreation}</td>
+                  <td>{item.voiture.nom}</td>
+                  <td>{item.voiture.categorie.nom}</td>
+                  <td>{item.voiture.type.nom}</td>
+                  <td>{item.voiture.modele.nom}</td>
+                  <td>{item.voiture.couleur}</td>
+                  <td>{item.voiture.localisation}</td>
+                  <td>{item.voiture.description}</td>
                   <td className="text-right">
                     <UncontrolledDropdown>
                       <DropdownToggle
@@ -146,18 +161,15 @@ function ModeleList() {
           </nav>
         </CardFooter>
       </Card>
-      {selectedModele && (
-        <ModeleForm
-          key={selectedModele.id}
-          title={'Modifier Modele'}
-          id={selectedModele.id}
-          idmarque={selectedModele.idmarque}
-          nom={selectedModele.nom}
-          dateCreation={selectedModele.dateCreation}
+      {selectedVoiture && (
+        <VoitureForm
+          key={selectedVoiture.id}
+          title={'Modifier Voiture'}
+          id={selectedVoiture.id}
+          nom={selectedVoiture.nom}
           isUpdate={true}
         />
       )}
-      {/* Confirmation Modal */}
       <Modal isOpen={confirmDeleteModal} toggle={handleCancelDelete}>
         <ModalHeader toggle={handleCancelDelete}>Confirm Delete</ModalHeader>
         <ModalBody>
@@ -172,4 +184,4 @@ function ModeleList() {
   );
 }
 
-export default ModeleList;
+export default VoitureList;
