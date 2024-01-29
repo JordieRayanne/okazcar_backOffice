@@ -4,10 +4,10 @@ import React from "react";
 
 function Commission(){
     return(
-        <>
+        <div style={{width:"75%",marginLeft:"20%"}}>
             <CommissionForm />
             <CommissionList />
-        </>
+        </div>
     );
 }
 
