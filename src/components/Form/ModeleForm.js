@@ -16,14 +16,19 @@ function getAllMarques(token) {
 }
 
 function submitForm(data, token) {
-
-  return fetch('https://okazcar.up.railway.app/modeles', {
+  const formData = new FormData();
+  for (let d in data) {
+    if (d !== "id") {
+      formData.append(d, data[d])
+    }
+  }
+  console.log(data)
+  return fetch('https://okazcar.up.railway.app/modele', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': token
     },
-    body: JSON.stringify(data),
+    body: formData
   })
     .then(response => response.json())
     .catch(error => {
@@ -33,14 +38,17 @@ function submitForm(data, token) {
 }
 
 function updateForm(data, token) {
-
+  let formData = new FormData()
+  for (let d in data) {
+    formData.append(d, data[d])
+  }
+  console.log(data)
   return fetch(`https://okazcar.up.railway.app/modeles/${data.id}`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
       'Authorization': token
     },
-    body: JSON.stringify(data),
+    body: data,
   })
     .then(response => {
       if (!response.ok) {
@@ -69,6 +77,7 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
 
   useEffect(() => {
     setFormattedDate(dateCreation.split('T')[0]);
+    formValues[dateCreation] = dateCreation.split('T')[0];
   }, [dateCreation]);
 
   useEffect(() => {
@@ -99,14 +108,14 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
       id: id,
       nom: formValues.nom,
       idmarque: formValues.idmarque,
-      dateCreation: formValues.dateCreation,
+      dateCreation: formattedDate,
     };
 
     try {
       if (isUpdate) {
-        await updateForm(formData);
+        await updateForm(formData, token());
       } else {
-        await submitForm(formData);
+        await submitForm(formData, token());
       }
       console.log('Form submitted successfully!');
       window.location.reload();
@@ -193,7 +202,6 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
                             type="date"
                             value={formattedDate}  // Use formattedDate as the value
                             onChange={(event) => setFormattedDate(event.target.value)}  // Update formattedDate on change
-                          
                           />
                         </FormGroup>
                       </Col>

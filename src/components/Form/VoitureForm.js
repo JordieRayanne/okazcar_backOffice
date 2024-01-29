@@ -62,13 +62,13 @@ function submitForm(form, token) {
     body: formData
   })
   .then(response => {
-    alert(response.text());
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
     return response.text(); 
   })
   .then(text => {
+    console.log(text)
     console.log('Response text:', text);
   })
   .catch(error => {

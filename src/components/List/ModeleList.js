@@ -106,7 +106,7 @@ function ModeleList() {
               data.map((item) => (
                 <tr key={item.id}>
                   <td>{item.nom}</td>
-                  <td>Marque 1</td>
+                  <td>{item.marque.nom}</td>
                   <td>{item.dateCreation}</td>
                   <td className="text-right">
                     <UncontrolledDropdown>

@@ -27,6 +27,8 @@ function TypeForm(){
   })
       .then(response => {
         console.log('Réponse de l\'insertion:', response.data);
+        window.location.reload();
+
       })
       .catch(error => {
         console.error('Erreur lors de l\'insertion:', error);

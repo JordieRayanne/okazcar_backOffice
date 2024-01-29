@@ -107,7 +107,7 @@ const Login = () => {
                   </InputGroup>
                 </FormGroup>
                 <div className="text-center">
-                  <Button disabled={disable} className="my-4" color="primary" type="submit">
+                  <Button disabled={disable} className="my-4" color="purple" type="submit">
                     Sign in
                   </Button>
                 </div>

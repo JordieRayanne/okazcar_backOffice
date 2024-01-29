@@ -110,7 +110,7 @@ const AnnonceList = () => {
     <div className="header bg-gradient-purple pb-8 pt-5 pt-md-8">
       <Container fluid>
         <div className="header-body">
-          <Row style={{ margin: '-7% 0px 3% 90%' }}>
+          <Row style={{ margin: '0 0px 3% 90%' }}>
           <div
               className="icon icon-shape bg-success text-white rounded-circle shadow"
               id="tooltip-icon-tout"

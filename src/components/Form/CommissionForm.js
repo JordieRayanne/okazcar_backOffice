@@ -34,6 +34,8 @@ function CommissionForm(){
       })
       .then(data => {
         console.log('Réponse de l\'insertion:', data);
+        window.location.reload();
+
       })
       .catch(error => {
         console.error('Erreur lors de l\'insertion:', error);
