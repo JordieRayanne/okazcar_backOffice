@@ -1,5 +1,4 @@
 import { useState } from "react";
-import axios from "axios";
 import {
     Button,
     Card,
@@ -14,24 +13,32 @@ import {
 function DeviseForm(){
   const[nom,setNom]=useState('');
 
-  const handleInsertion=()=>{
-    const formData={
-      nom:nom,
+  const handleInsertion = () => {
+    const formData = {
+      nom: nom,
     };
     console.log(formData);
     const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjE4NDEsImV4cCI6MTcwNjQ2OTA0MX0.-Jn5DPKV6ZiAR4kEXsjyq5YCTqZR5WoQMhnuxul4ihs'; // Replace with your actual token
 
-    axios.post('https://okazcar.up.railway.app/devise', formData, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  })
+    fetch('https://okazcar.up.railway.app/devise', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(formData),
+    })
       .then(response => {
-        console.log('Réponse de l\'insertion:', response.data);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Réponse de l\'insertion:', data);
       })
       .catch(error => {
         console.error('Erreur lors de l\'insertion:', error);
-        console.log('Réponse côté client:', error.response);
       });
   };
 
