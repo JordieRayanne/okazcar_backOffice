@@ -11,8 +11,6 @@ import "assets/scss/argon-dashboard-react.scss";
 import {AuthProvider, RequireAuth} from "react-auth-kit";
 import App from "./App";
 
-import AdminLayout from "layouts/Admin.js";
-import AuthLayout from "layouts/Auth.js";
 import Sidebar from "components/Sidebar/Sidebar";
 import Annonce from "views/annnonce/Annonce";
 import Index from "views/Index";
