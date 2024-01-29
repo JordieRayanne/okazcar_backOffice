@@ -31,8 +31,17 @@ root.render(
                   cookieDomain={window.location.hostname}
                   cookieSecure={window.location.protocol === "https:"}>
   <BrowserRouter>
-    <React.StrictMode>
         <Routes>
+            <Route exact path="/auth/*" element={<AuthLayout />}>
+                <Route path="/admin/*"
+                   element={
+                       <RequireAuth loginPath="/auth/login">
+                           <AdminLayout />
+                       </RequireAuth>
+                   }
+                >
+            </Route>
+            <Route path="*" element={<Navigate to="/admin/index" replace />} />
             <Route path="/admin/statistiques" element={
                 <>
                     <Sidebar 
@@ -105,17 +114,8 @@ root.render(
                 </>
             } 
             />
-            <Route path="/admin/*"
-                   element={
-                       <RequireAuth loginPath="/auth/login">
-                           <AdminLayout />
-                       </RequireAuth>
-                   }
-            ></Route>
-            {/*<Route path="/auth/*" element={<AuthLayout />} />*/}
-             {/*<Route path="*" element={<Navigate to="/admin/index" replace />} />*/}
+           
         </Routes>
-    </React.StrictMode>
   </BrowserRouter>
     </AuthProvider>
 );
