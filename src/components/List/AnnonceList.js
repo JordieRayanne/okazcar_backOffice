@@ -180,6 +180,7 @@ const token = useAuthHeader()
                         <img
                           alt="(impossible de faire un rendu de l'image "
                           src={`data:image/png;base64,${annonce.voitureImage.imagesBytes[0]}`}
+                          style={{width:"100%"}}
                       />
                        {!isListValidated ? (
                           <>
