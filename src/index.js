@@ -113,7 +113,7 @@ root.render(
                    }
             ></Route>
             {/*<Route path="/auth/*" element={<AuthLayout />} />*/}
-            <Route path="*" element={<Navigate to="/admin/index" replace />} />
+             {/*<Route path="*" element={<Navigate to="/admin/index" replace />} />*/}
         </Routes>
     </React.StrictMode>
   </BrowserRouter>
