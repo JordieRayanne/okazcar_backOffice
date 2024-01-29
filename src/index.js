@@ -49,6 +49,79 @@ root.render(
                   path="/"
                   element={<Navigate to="/auth/login" replace />}
                 />
+                  <Routes>
+            <Route path="/admin/statistiques" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Index />
+                </>
+            } 
+            />
+           <Route path="/admin/annonces" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Annonce />
+                </>
+            } 
+            />
+            <Route path="/admin/categorie" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Categorie />
+                </>
+            } 
+            />
+            <Route path="/admin/modele" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Modele />
+                </>
+            } 
+            />
+            <Route path="/admin/marque" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Marque />
+                </>
+            } 
+            />
+            <Route path="/admin/type" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Type />
+                </>
+            } 
+            />
+            <Route path="/admin/devise" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Devise />
+                </>
+            } 
+            />
+            <Route path="/admin/commission" element={
+                <>
+                    <Sidebar 
+                    routes={routes}
+                    />
+                    <Commission />
+                </>
+            } 
+            />
             </Routes>
         </BrowserRouter>
     </AuthProvider>
