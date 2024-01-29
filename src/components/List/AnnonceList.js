@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
 import { RingLoader } from 'react-spinners'; // Import the spinner component
-const token = useAuthHeader()
+import {useAuthHeader} from "react-auth-kit";
 const AnnonceList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isListValidated, setisListValidated] = useState(false);
+const token = useAuthHeader()
 
   useEffect(() => {
     const fetchData = async () => {
