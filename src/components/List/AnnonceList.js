@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
+import { Card, CardBody, Container, Row, Col, Button } from 'reactstrap';
 import { useAuthHeader } from 'react-auth-kit';
 
 const AnnonceList = () => {
@@ -29,7 +29,7 @@ const AnnonceList = () => {
     };
 
     fetchData();
-  }, []);
+  }, [token]);
 
   const handleValidate = async (annonceId) => {
     try {
@@ -118,10 +118,7 @@ const AnnonceList = () => {
               onClick={handleAnnonceAll}
               style={{ cursor: "pointer" }}
             >
-              <i className="ni ni-align-center" />
-              <UncontrolledTooltip placement="left" target="tooltip-icon-tout">
-                Tout voir
-              </UncontrolledTooltip>
+              Tout voir
             </div>
             <div
               className="icon icon-shape bg-danger text-white rounded-circle shadow"
@@ -129,70 +126,57 @@ const AnnonceList = () => {
               onClick={handleAnnonceClick}
               style={{ margin: "0px 0px 0px 10px", cursor: "pointer" }}
             >
-              <i className="ni ni-bell-55" />
-              <UncontrolledTooltip placement="left" target="tooltip-icon">
-                Annonce en attente
-              </UncontrolledTooltip>
+              Annonce en attente
             </div>
           </Row>
           {data.map((annonce) => (
             <Row key={annonce.id}>
-              <Col lg="2" xl="4">
-                <Card style={{ height: '60vh' }} className="card-stats mb-4 mb-xl-0">
+              <Col lg="6" xl="6" className="mb-4 mb-xl-0">
+                <Card style={{ height: '60vh' }} className="card-stats">
                   <CardBody>
-                    <Row>
-                      <Col>
-                        <CardTitle tag="h5" className="text-uppercase text-muted mb-0">
-                          {annonce.voitureUtilisateur?.utilisateur.username}
-                        </CardTitle>
-                        <span className="h2 font-weight-bold mb-0">
-                          {annonce.voitureUtilisateur?.voiture?.nom || annonce.voiture.nom} -{' '}
-                          {annonce.voitureUtilisateur?.voiture?.modele?.marque?.nom ||
-                            annonce.voiture.modele.marque.nom}{' '}
-                          {annonce.voitureUtilisateur?.voiture?.categorie?.nom ||
-                            annonce.voiture.categorie.nom} <br />
-                          Type: {annonce.voitureUtilisateur?.voiture?.type?.nom || annonce.voiture.type.nom}
-                        </span>
-                        <h5>Immatriculation: {annonce.voitureUtilisateur?.immatriculation || ''}</h5>
-                        <h4>
-                          Prix de vente: {annonce.prix || ''} {annonce.devise?.nom || ''} - Prix du commission:{' '}
-                          {annonce.prixCommission || ''} {annonce.devise?.nom || ''}
-                        </h4>
-
-                        <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
-                        <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
-                      </Col>
-                      <Col lg="6" md="6" sm="12">
-                        {/* Display the image here */}
-                        {annonce.voitureImage[0] && (
-                          <img
-                            src={`data:image/jpeg;base64,${annonce.voitureImage[0]}`}
-                            alt="Voiture"
-                            style={{ width: '100%', height: 'auto', maxHeight: '200px', objectFit: 'cover' }}
-                          />
-                        )}
-                      </Col>
-                      {!isListValidated ? (
-                        <Col lg="12" md="12" sm="12" className="mt-3">
-                          <>
-                            <Button
-                              style={{ width: '100%', backgroundColor: "lightgreen", color: "white" }}
-                              onClick={() => handleValidate(annonce.id)}
-                            >
-                              Valider
-                            </Button>
-                            <Button
-                              style={{ width: '100%', backgroundColor: "lightsalmon", color: "white", marginTop: '5px' }}
-                              onClick={() => handleReject(annonce.id)}
-                            >
-                              Refuser
-                            </Button>
-                          </>
-                        </Col>
-                      ) : ""}
-                    </Row>
+                    <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
+                    <span className="h2 font-weight-bold mb-0">
+                      {annonce.voitureUtilisateur?.voiture?.nom || annonce.voiture.nom} -{' '}
+                      {annonce.voitureUtilisateur?.voiture?.modele?.marque?.nom ||
+                        annonce.voiture.modele.marque.nom}{' '}
+                      {annonce.voitureUtilisateur?.voiture?.categorie?.nom ||
+                        annonce.voiture.categorie.nom} <br />
+                      Type: {annonce.voitureUtilisateur?.voiture?.type?.nom || annonce.voiture.type.nom}
+                    </span>
+                    <h5>Immatriculation: {annonce.voitureUtilisateur?.immatriculation || ''}</h5>
+                    <h4>
+                      Prix de vente: {annonce.prix || ''} {annonce.devise?.nom || ''} - Prix du commission:{' '}
+                      {annonce.prixCommission || ''} {annonce.devise?.nom || ''}
+                    </h4>
+                    <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
+                    <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
+                    {!isListValidated ? (
+                      <>
+                        <Button
+                          style={{ width: '100%', backgroundColor: "lightgreen", color: "white" }}
+                          onClick={() => handleValidate(annonce.id)}
+                        >
+                          Valider
+                        </Button>
+                        <Button
+                          style={{ width: '100%', backgroundColor: "lightsalmon", color: "white", marginTop: '5px' }}
+                          onClick={() => handleReject(annonce.id)}
+                        >
+                          Refuser
+                        </Button>
+                      </>
+                    ) : ""}
                   </CardBody>
                 </Card>
+              </Col>
+              <Col lg="6" xl="6" className="mb-4 mb-xl-0">
+                {annonce.voitureImage[0] && (
+                  <img
+                    src={`data:image/jpeg;base64,${annonce.voitureImage[0]}`}
+                    alt="Voiture"
+                    style={{ width: '100%', height: 'auto', maxHeight: '60vh', objectFit: 'contain' }}
+                  />
+                )}
               </Col>
             </Row>
           ))}
