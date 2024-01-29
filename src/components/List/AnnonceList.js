@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
 import { RingLoader } from 'react-spinners'; // Import the spinner component
-import token from 'token';
-
+const token = useAuthHeader()
 const AnnonceList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -15,7 +14,7 @@ const AnnonceList = () => {
         
         const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: token()
           },
         });
   
@@ -38,7 +37,7 @@ const AnnonceList = () => {
         method: 'POST', 
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: token(),
         },
       });
   
@@ -83,7 +82,7 @@ const AnnonceList = () => {
   
       const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_not_validated', {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: token()
         },
       });
       const result = await response.json();
@@ -103,7 +102,7 @@ const AnnonceList = () => {
   
       const response = await fetch('https://okazcar.up.railway.app/voitureUtilisateurs_validated', {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: token()
         },
       });
       const result = await response.json();
@@ -178,17 +177,10 @@ const AnnonceList = () => {
                           <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
                           <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
                         </Col>
-                        <div
-                          className="header pb-8 pt-5 pt-lg-8 d-flex align-items-center"
-                          style={{
-                            minHeight: '300px',
-                            width: '100%',
-                            backgroundImage:
-                              'url(' + require('../../assets/img/theme/profile-cover.jpg') + ')',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center top',
-                          }}
-                        ></div>
+                        <img
+                          alt="(impossible de faire un rendu de l'image "
+                          src={`data:image/png;base64,${annonce.voitureImage[0]}`}
+                      />
                        {!isListValidated ? (
                           <>
                             <Button
@@ -219,3 +211,5 @@ const AnnonceList = () => {
 };
 
 export default AnnonceList;
+
+
