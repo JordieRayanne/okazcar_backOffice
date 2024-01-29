@@ -134,8 +134,7 @@ root.render(
                 </>
             } 
             />
-            </Routes>
-                <Route path="/admin/voiture" element={
+            <Route path="/admin/voiture" element={
                 <>
                     <Sidebar 
                     routes={routes}
