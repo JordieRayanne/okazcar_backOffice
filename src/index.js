@@ -29,13 +29,13 @@ import AuthLayout from "layouts/Auth.js";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
+  <React.StrictMode>
   <BrowserRouter>
-    <React.StrictMode>
     <Routes>
       <Route path="/admin/*" element={<AdminLayout />} />
       <Route path="/auth/*" element={<AuthLayout />} />
       <Route path="*" element={<Navigate to="/admin/index" replace />} />
     </Routes>
-  </React.StrictMode>
   </BrowserRouter>
+  </React.StrictMode>
 );
