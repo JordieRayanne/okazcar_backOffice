@@ -10,23 +10,21 @@ import {
     Row,
     Col,
   } from "reactstrap";
+import {useAuthHeader} from "react-auth-kit";
 function CommissionForm(){
   const[commission,setCommission]=useState('');
+  const token = useAuthHeader()
 
   const handleInsertion = () => {
-    const formData = {
-      commission: commission,
-    };
-    console.log(formData);
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjE4NDEsImV4cCI6MTcwNjQ2OTA0MX0.-Jn5DPKV6ZiAR4kEXsjyq5YCTqZR5WoQMhnuxul4ihs'; // Replace with your actual token
+      const formData = new FormData()
+      formData.append("commission", commission)
 
-    fetch('https://okazcar.up.railway.app/commission', {
+    fetch('https://okazcar.up.railway.app/commission',{
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
+        'Authorization': token()
       },
-      body: JSON.stringify(formData),
+        body: formData
     })
       .then(response => {
         if (!response.ok) {

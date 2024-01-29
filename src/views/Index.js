@@ -65,11 +65,6 @@ const Index = () => {
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
-  let plotData
-  if (data.revenuesParMois !== null && data.revenuesParMois !== undefined) {
-    plotData = plotChartData(data.revenuesParMois)
-  }
-
   return (
     <>
       <Header cards={data.cardDatas} />

@@ -14,7 +14,7 @@ import {
   Button
 } from 'reactstrap';
 import ModeleForm from 'components/Form/ModeleForm';
-import token from 'token';
+import {useAuthHeader} from "react-auth-kit";
 function ModeleList() {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -22,6 +22,7 @@ function ModeleList() {
   const [selectedModele, setSelectedModele] = useState(null);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [DeleteId, setDeleteId] = useState(-1);
+  const token = useAuthHeader()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,7 +30,7 @@ function ModeleList() {
         const response = await fetch('https://okazcar.up.railway.app/modeles', {
           method: 'GET',
           headers:{
-            "Authorization":`Bearer ${token}`
+            "Authorization":token()
           }
         });
         const result = await response.json();
@@ -50,7 +51,6 @@ function ModeleList() {
 
   const handleSupprimerClick = (item) => {
     setConfirmDeleteModal(true);
-    console.log(item.id+" huhu");
     setDeleteId(item.id);
   };
 
@@ -58,7 +58,7 @@ function ModeleList() {
     fetch(`https://okazcar.up.railway.app/modeles/${DeleteId}`, {
       method: 'DELETE',
       headers:{
-        "Authorization":`Bearer ${token}`
+        "Authorization":token()
       }
     })
       .then(response => response.json())

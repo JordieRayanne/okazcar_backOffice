@@ -2,20 +2,18 @@ import React, { useState, useEffect } from 'react';
 import {
   Card,
   CardHeader,
-  CardFooter,
   DropdownMenu,
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Pagination,
   Table,
   Col,
   Modal, ModalHeader, ModalBody, ModalFooter,
   Button
 } from 'reactstrap';
 import VoitureForm from 'components/Form/VoitureForm';
-import { RingLoader } from 'react-spinners'; // Import the spinner component
-import Header from 'components/Headers/Header';
+import { RingLoader } from 'react-spinners';
+import {useAuthHeader} from "react-auth-kit"; // Import the spinner component
 
 function VoitureList() {
   const [data, setData] = useState(null);
@@ -24,6 +22,7 @@ function VoitureList() {
   const [selectedVoiture, setSelectedVoiture] = useState(null);
   const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
   const [DeleteId, setDeleteId] = useState(-1);
+  const token = useAuthHeader()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +30,7 @@ function VoitureList() {
         const response = await fetch('https://okazcar.up.railway.app/voitures',{
           method:'GET',
           headers:{
-            'Authorization':'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NzA1MTksImV4cCI6MTcwNjQ3NzcxOX0.YwDbrYcECBJZRfRjOz4FKxSotTfLtKAGDWNSJDnDGU0'
+            'Authorization': token()
           }
         });
         const result = await response.json();
@@ -52,7 +51,6 @@ function VoitureList() {
 
   const handleSupprimerClick = (item) => {
     setConfirmDeleteModal(true);
-    console.log(item.voiture.id+" huhu");
     setDeleteId(item.voiture.id);
   };
 
@@ -60,7 +58,7 @@ function VoitureList() {
     fetch(`https://okazcar.up.railway.app/voitures/${DeleteId}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NzA1MTksImV4cCI6MTcwNjQ3NzcxOX0.YwDbrYcECBJZRfRjOz4FKxSotTfLtKAGDWNSJDnDGU0'
+        'Authorization': token()
       }
     })
       .then(response => {
@@ -150,16 +148,6 @@ function VoitureList() {
               ))}
           </tbody>
         </Table>
-        <CardFooter className="py-4">
-          <nav aria-label="...">
-            <Pagination
-              className="pagination justify-content-end mb-0"
-              listClassName="justify-content-end mb-0"
-            >
-              {/* ...pagination links */}
-            </Pagination>
-          </nav>
-        </CardFooter>
       </Card>
       {selectedVoiture && (
         <VoitureForm

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Input, Button } from 'reactstrap';
+import {useAuthHeader} from "react-auth-kit";
 
-function getAllMarques() {
-  return fetch('http://localhost:8080/marques')
+function getAllMarques(token) {
+  return fetch('https://okazcar.up.railway.app/marques', {
+    headers: {
+      'Authorization': token
+    }
+  })
     .then(response => response.json())
     .catch(error => {
       console.error('Error fetching marques:', error);
@@ -10,11 +15,13 @@ function getAllMarques() {
     });
 }
 
-function submitForm(data) {
-  return fetch('http://localhost:8080/modeles', {
+function submitForm(data, token) {
+
+  return fetch('https://okazcar.up.railway.app/modeles', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': token
     },
     body: JSON.stringify(data),
   })
@@ -25,13 +32,13 @@ function submitForm(data) {
     });
 }
 
-function updateForm(data) {
-  console.log(`http://localhost:8080/modeles/${data.id}`);
-  console.log(data);
-  return fetch(`http://localhost:8080/modeles/${data.id}`, {
+function updateForm(data, token) {
+
+  return fetch(`https://okazcar.up.railway.app/modeles/${data.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': token
     },
     body: JSON.stringify(data),
   })
@@ -52,6 +59,8 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [formattedDate, setFormattedDate] = useState('');
+  const token = useAuthHeader()
+
   const [formValues, setFormValues] = useState({
     nom: nom,
     idmarque: idmarque,
@@ -63,9 +72,9 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
   }, [dateCreation]);
 
   useEffect(() => {
-    const fetchMarques = async () => {
+    const fetchMarques = async (token) => {
       try {
-        const marquesData = await getAllMarques();
+        const marquesData = await getAllMarques(token);
         setMarques(marquesData);
       } catch (error) {
         setError(error);
@@ -74,7 +83,7 @@ function ModeleForm({ title = "Modele", nom = "", id = -1, idmarque = -1, dateCr
       }
     };
 
-    fetchMarques();
+    fetchMarques(token());
   }, []);
 
   const handleInputChange = (event) => {

@@ -3,7 +3,6 @@ import axios from "axios";
 import {
     Button,
     Card,
-    CardHeader,
     CardBody,
     FormGroup,
     Form,
@@ -12,19 +11,18 @@ import {
     Row,
     Col,
   } from "reactstrap";
+import {useAuthHeader} from "react-auth-kit";
 function TypeForm(){
   const[nom,setNom]=useState('');
+    const token = useAuthHeader()
 
   const handleInsertion=()=>{
-    const formData={
-      nom:nom,
-    };
-    console.log(formData);
-    const token = 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiUk9MRV9BRE1JTiIsInN1YiI6Im1haGZpdGFoaWFuYUBnbWFpbC5jb20iLCJpYXQiOjE3MDY0NjE4NDEsImV4cCI6MTcwNjQ2OTA0MX0.-Jn5DPKV6ZiAR4kEXsjyq5YCTqZR5WoQMhnuxul4ihs'; // Replace with your actual token
+      const formData = new FormData()
+      formData.append("nom", nom)
 
     axios.post('https://okazcar.up.railway.app/type', formData, {
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': token()
     }
   })
       .then(response => {
