@@ -27,6 +27,18 @@ import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth"
 import {AuthProvider, RequireAuth} from "react-auth-kit";
 
+import Sidebar from "components/Sidebar/Sidebar";
+import Annonce from "views/annnonce/Annonce";
+import Index from "views/Index";
+import routes from "routes";
+import Icons from "views/examples/Icons";
+import Categorie from "views/crud/Categorie";
+import Modele from "views/crud/Modele";
+import Marque from "views/crud/Marque";
+import Type from "views/crud/Type";
+import Devise from "views/crud/Devise";
+import Commission from "views/crud/Commission";
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
