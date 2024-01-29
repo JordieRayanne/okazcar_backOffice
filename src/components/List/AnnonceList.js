@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardTitle, Container, Row, Col, UncontrolledTooltip, Button } from 'reactstrap';
 import { useAuthHeader } from 'react-auth-kit';
-import { Image } from 'react-native';
 const AnnonceList = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -162,9 +161,9 @@ const AnnonceList = () => {
                         <h4>Localisation: {annonce.voitureUtilisateur?.voiture?.localisation || ''}</h4>
                         <h4>Date de demande: {annonce.voitureUtilisateur?.voiture?.dateDemande || ''}</h4>
                       </Col>
-                      <Image
-                        style={{ width: 100, height: 100 }} // Set the appropriate width and height
-                        source={{ uri: `data:image/png;base64,${annonce.voitureImage[0]}` }} // Use the base64 image data
+                      <img
+                          alt="(impossible de faire un rendu de l'image "
+                          src={`data:image/png;base64,${annonce.voitureImage[0]}`}
                       />
                       {!isListValidated ? (
                         <>
