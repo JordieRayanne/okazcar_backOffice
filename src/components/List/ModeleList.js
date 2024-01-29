@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Badge,
   Card,
   CardHeader,
   CardFooter,
@@ -8,16 +7,9 @@ import {
   DropdownItem,
   UncontrolledDropdown,
   DropdownToggle,
-  Media,
   Pagination,
-  PaginationItem,
-  PaginationLink,
-  Progress,
   Table,
-  Container,
   Col,
-  Row,
-  UncontrolledTooltip,
   Modal, ModalHeader, ModalBody, ModalFooter,
   Button
 } from 'reactstrap';
