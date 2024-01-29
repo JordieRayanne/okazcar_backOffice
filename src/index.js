@@ -16,9 +16,10 @@ import Marque from "views/crud/Marque";
 import Type from "views/crud/Type";
 import Devise from "views/crud/Devise";
 import Commission from "views/crud/Commission";
+import Login from "views/examples/Login";
 
 // Placeholder components (replace with your actual components)
-const Login = () => <div>Login Page</div>;
+const Login = () => <div><Login /></div>;
 const NotFound = () => <div>404 Not Found</div>;
 
 // AuthenticatedRoute component to protect routes
