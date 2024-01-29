@@ -24,13 +24,9 @@ import Chart from "chart.js";
 import { Line } from "react-chartjs-2";
 // reactstrap components
 import {
-  Button,
   Card,
   CardHeader,
   CardBody,
-  NavItem,
-  NavLink,
-  Nav,
   Table,
   Container,
   Row,
@@ -41,41 +37,42 @@ import {
 import {
   chartOptions,
   parseOptions,
-  chartExample1,
-  chartExample2,
 } from "variables/charts.js";
 
 import Header from "components/Headers/Header.js";
 import axios from "axios";
 import {useAuthHeader} from "react-auth-kit";
+import {helper, plotChartData} from "../components/Helper/Helper";
+import {useNavigate} from "react-router-dom";
 
 const Index = () => {
-  const [activeNav, setActiveNav] = useState(1);
-  const [chartExample1Data, setChartExample1Data] = useState("data1");
   const [data, setData] = useState({})
   const token = useAuthHeader()
+  const navigate = useNavigate()
   useEffect(() => {
     (async () => {
       let response = await axios.get("https://okazcar.up.railway.app/stats", {
-        "Authorization": token()
+        headers: {
+          "Authorization": token()
+        }
       })
       response = response.data
-      console.log(response)
-    })()
+      if (!helper(response, navigate))
+        setData(response)
+      })()
   }, []);
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
   }
+  let plotData
+  if (data.revenuesParMois !== null && data.revenuesParMois !== undefined) {
+    plotData = plotChartData(data.revenuesParMois)
+  }
 
-  const toggleNavs = (e, index) => {
-    e.preventDefault();
-    setActiveNav(index);
-    setChartExample1Data("data" + index);
-  };
   return (
     <>
-      <Header />
+      <Header cards={data.cardDatas} />
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
@@ -87,18 +84,21 @@ const Index = () => {
                     <h6 className="text-uppercase text-light ls-1 mb-1">
                       Overview
                     </h6>
-                    <h2 className="text-white mb-0">Sales value</h2>
+                    <h2 className="text-white mb-0">Graphe des revenues</h2>
                   </div>
                 </Row>
               </CardHeader>
               <CardBody>
                 {/* Chart */}
                 <div className="chart">
-                  <Line
-                    data={chartExample1[chartExample1Data]}
-                    options={chartExample1.options}
-                    getDatasetAtEvent={(e) => console.log(e)}
-                  />
+                  {
+                    data.revenuesParMois !== null && data.revenuesParMois !== undefined &&
+                      <Line
+                          data={plotChartData(data.revenuesParMois).datas()}
+                          options={plotChartData(data.revenuesParMois).options}
+                          getDatasetAtEvent={(e) => console.log(e)}
+                      />
+                  }
                 </div>
               </CardBody>
             </Card>
@@ -110,73 +110,24 @@ const Index = () => {
               <CardHeader className="border-0">
                 <Row className="align-items-center">
                   <div className="col">
-                    <h3 className="mb-0">Page visits</h3>
-                  </div>
-                  <div className="col text-right">
-                    <Button
-                      color="primary"
-                      href="#pablo"
-                      onClick={(e) => e.preventDefault()}
-                      size="sm"
-                    >
-                      See all
-                    </Button>
+                    <h3 className="mb-0">Nombres de paramètres</h3>
                   </div>
                 </Row>
               </CardHeader>
               <Table className="align-items-center table-flush" responsive>
                 <thead className="thead-light">
                   <tr>
-                    <th scope="col">Page name</th>
-                    <th scope="col">Visitors</th>
-                    <th scope="col">Unique users</th>
-                    <th scope="col">Bounce rate</th>
+                    <th scope="col">Paramètres</th>
+                    <th scope="col">Valeurs</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">/argon/</th>
-                    <td>4,569</td>
-                    <td>340</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/index.html</th>
-                    <td>3,985</td>
-                    <td>319</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/charts.html</th>
-                    <td>3,513</td>
-                    <td>294</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-warning mr-3" />{" "}
-                      36,49%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/tables.html</th>
-                    <td>2,050</td>
-                    <td>147</td>
-                    <td>
-                      <i className="fas fa-arrow-up text-success mr-3" /> 50,87%
-                    </td>
-                  </tr>
-                  <tr>
-                    <th scope="row">/argon/profile.html</th>
-                    <td>1,795</td>
-                    <td>190</td>
-                    <td>
-                      <i className="fas fa-arrow-down text-danger mr-3" />{" "}
-                      46,53%
-                    </td>
-                  </tr>
+                {data.parametres !== null && data.parametres !== undefined && Object.entries(data.parametres).map(([key, value]) => (
+                    <tr key={key}>
+                      <th scope="row">{key}</th>
+                      <td>{value}</td>
+                    </tr>
+                ))}
                 </tbody>
               </Table>
             </Card>
