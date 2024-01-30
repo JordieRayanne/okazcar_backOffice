@@ -1,58 +1,27 @@
-import { NavItem, NavLink, Nav, Container, Row, Col } from "reactstrap";
+import {Container, Row, Col } from "reactstrap";
 
 const Login = () => {
   return (
-    <>
-      <footer className="py-5">
-        <Container>
-          <Row className="align-items-center justify-content-xl-between">
-            <Col xl="6">
-              <div className="copyright text-center text-xl-left text-muted">
-                © {new Date().getFullYear()}{" "}
-                <a
-                  className="font-weight-bold ml-1"
-                  href="https://www.creative-tim.com?ref=adr-auth-footer"
-                >
-                  Creative Tim
-                </a>
-              </div>
-            </Col>
-            <Col xl="6">
-              <Nav className="nav-footer justify-content-center justify-content-xl-end">
-                <NavItem>
-                  <NavLink
-                    href="https://www.creative-tim.com?ref=adr-auth-footer"
+      <>
+        <footer className="py-5">
+          <Container>
+            <Row className="align-items-center justify-content-xl-between">
+              <Col xl="12">
+                <div className="copyright text-center text-xl-center text-muted">
+                  © {new Date().getFullYear()}{" "}
+                  <a
+                      className="font-weight-bold ml-1"
+                      href="#"
+                      target="_blank"
                   >
-                    Creative Tim
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    href="https://www.creative-tim.com/presentation?ref=adr-auth-footer"
-                  >
-                    About Us
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    href="http://blog.creative-tim.com?ref=adr-auth-footer"
-                  >
-                    Blog
-                  </NavLink>
-                </NavItem>
-                <NavItem>
-                  <NavLink
-                    href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md?ref=adr-auth-footer"
-                  >
-                    MIT License
-                  </NavLink>
-                </NavItem>
-              </Nav>
-            </Col>
-          </Row>
-        </Container>
-      </footer>
-    </>
+                    Okazcar
+                  </a>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </footer>
+      </>
   );
 };
 

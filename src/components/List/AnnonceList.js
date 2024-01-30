@@ -35,10 +35,9 @@ const token = useAuthHeader()
   const handleValidate = async (annonceId) => {
     try {
       const response = await fetch(`https://okazcar.up.railway.app/voitureUtilisateurs/${annonceId}/to-10`, {
-        method: 'POST', 
+        method: 'GET',
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: token(),
+          'Authorization': token()
         },
       });
   
