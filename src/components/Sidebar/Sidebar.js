@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink as NavLinkRRD, Link } from "react-router-dom";
+import {NavLink as NavLinkRRD, Link, useNavigate} from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -30,7 +30,11 @@ import {
 const Sidebar = (props) => {
   const [collapseOpen, setCollapseOpen] = useState();
   // verifies if routeName is the one active (in browser input)
-  
+  const navigate = useNavigate()
+  const signOut = () => {
+    localStorage.clear()
+    navigate("/auth/login")
+  }
   // toggles collapse between opened and closed (true/false)
   const toggleCollapse = () => {
     setCollapseOpen((data) => !data);
@@ -208,7 +212,7 @@ const Sidebar = (props) => {
           {/* Navigation */}
           <Nav className="mb-md-3" navbar>
             <NavItem className="active-pro active">
-              <NavLink href="https://www.creative-tim.com/product/argon-dashboard-pro-react?ref=adr-admin-sidebar">
+              <NavLink href="#" onClick={signOut}>
                 <i className="ni ni-bold-left" />
                 Logout
               </NavLink>

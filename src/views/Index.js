@@ -66,7 +66,7 @@ const Index = () => {
     parseOptions(Chart, chartOptions());
   }
   return (
-    <div style={{width:"75%",marginLeft:"20%"}}>
+    <div style={{width:"87%", marginLeft: "13%"}}>
       <Header cards={data.cardDatas} />
       {/* Page content */}
       <Container className="mt--7" fluid>
