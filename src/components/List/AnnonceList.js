@@ -34,7 +34,7 @@ const token = useAuthHeader()
   
   const handleValidate = async (annonceId) => {
     try {
-      const response = await fetch(`https://okazcar.up.railway.app/voitureUtilisateurs/${annonceId}/to-10`, {
+      const response = await fetch(`https://okazcar.up.railway.app/voitureUtilisateurs/${annonceId}/to_10`, {
         method: 'GET',
         headers: {
           'Authorization': token()
@@ -44,29 +44,26 @@ const token = useAuthHeader()
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
       console.log('Validation successful!');
-      handleAnnonceClick();
+      await handleAnnonceClick();
     } catch (error) {
       console.error('Error during validation:', error);
-      handleAnnonceClick();
-
+      await handleAnnonceClick();
     }
   };
 
   const handleReject = async (annonceId) => {
     try {
-      // const response = await fetch(`http://localhost:8080/voitureUtilisateurs/${annonceId}/to-10`, {
-      //   method: 'POST', 
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // });
+      const response = await fetch(`https://okazcar.up.railway.app/voitureUtilisateurs/${annonceId}`, {
+         method: 'DELETE',
+         headers: {
+           'Authorization': token()
+         }
+      });
   
-      // if (!response.ok) {
-      //   throw new Error(`HTTP error! Status: ${response.status}`);
-      // }
+      if (!response.ok) {
+         throw new Error(`HTTP error! Status: ${response.status}`);
+      }
   
       alert('Rejected');
     } catch (error) {
